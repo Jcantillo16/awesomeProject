@@ -28,7 +28,7 @@ func GetItunes(query string) []byte {
 	var resultado models.Song
 	json.Unmarshal(body, &resultado)
 	for _, v := range resultado.Results.([]interface{}) {
-		InsertoRegistro(v)
+		InsertoRegistro(v, url)
 	}
 	if err != nil {
 		fmt.Println("ERROR EN EL UNMARSHAL")

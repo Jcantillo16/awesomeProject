@@ -2,27 +2,38 @@ package db
 
 import (
 	"awesomeProject/models"
-	"awesomeProject/utils"
-	"context"
+	"encoding/json"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"time"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
-func GetChartlyrics(artist string, song string) (models.Song, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel()
-	db := MongoCN.Database("twittor")
-	col := db.Collection("lyrics")
-	var resultado models.Song
-	err := col.FindOne(
-		ctx,
-		bson.M{"$or": []bson.M{{"artist": utils.LikeMongo(artist)},
-			{"song": utils.LikeMongo(song)}}}).Decode(&resultado)
+func GetChartlyrics(query string) []byte {
+	url := "http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist=" + query
+	fmt.Println("url:", url)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		fmt.Println("entra a buscar en itunes")
-		GetItunes(artist)
-		return resultado, err
+		fmt.Println("ERROR EN EL REQUEST")
+		log.Fatal(err)
 	}
-	return resultado, nil
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	var resultado models.Song
+	json.Unmarshal(body, &resultado)
+	for _, v := range resultado.Results.([]interface{}) {
+		InsertoRegistro(v, url)
+	}
+	if err != nil {
+		fmt.Println("ERROR EN EL UNMARSHAL")
+		log.Fatal(err)
+
+	}
+	return body
 }

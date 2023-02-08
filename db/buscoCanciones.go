@@ -23,6 +23,7 @@ func BuscoCanciones(param string) ([]models.Song, error) {
 	if err != nil {
 		fmt.Println("entra a buscar en itunes")
 		GetItunes(param)
+		GetChartlyrics(param)
 		return resultado, err
 	}
 	for cursor.Next(context.TODO()) {

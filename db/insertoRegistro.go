@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func InsertoRegistro(t interface{}) {
+func InsertoRegistro(t interface{}, collection string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	db := MongoCN.Database("twittor")

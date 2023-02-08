@@ -13,4 +13,5 @@ type Song struct {
 	Duration int64              `bson:"trackTimeMillis" json:"trackTimeMillis"`
 	Album    string             `bson:"collectionName" json:"collectionName"`
 	Artwork  string             `bson:"artworkUrl100" json:"artworkUrl100"`
+	Origin   string             `bson:"origin" json:"origin"`
 }
