@@ -2,6 +2,7 @@ package db
 
 import (
 	"awesomeProject/models"
+	"awesomeProject/utils"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
@@ -16,9 +17,9 @@ func BuscoCancion(param string) (models.Song, error) {
 	var resultado models.Song
 	err := col.FindOne(
 		ctx,
-		bson.M{"$or": []bson.M{{"trackCensoredName": param},
-			{"artistName": param},
-			{"collectionName": param}}}).Decode(&resultado)
+		bson.M{"$or": []bson.M{{"trackCensoredName": utils.Like(param)},
+			{"artistName": utils.Like(param)},
+			{"collectionName": utils.Like(param)}}}).Decode(&resultado)
 
 	if err != nil {
 		fmt.Println("entra a buscar en itunes")
