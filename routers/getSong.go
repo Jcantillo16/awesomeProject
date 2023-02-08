@@ -23,7 +23,7 @@ func GetFilterBy(w http.ResponseWriter, r *http.Request) {
 			GetFilterName(w, r)
 			return
 		}
-		if params.Get("artistName") != "" {
+		if params.Get("artist") != "" {
 			GetFilterArtist(w, r)
 			return
 		}
