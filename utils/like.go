@@ -1,7 +1,10 @@
 package utils
 
-import "fmt"
+import (
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
-func Like(param string) string {
-	return fmt.Sprintf(`{ "$regex": ".*%s.*" }`, param)
+func LikeMongo(param string) bson.M {
+	return bson.M{"$regex": primitive.Regex{Pattern: param, Options: "i"}}
 }

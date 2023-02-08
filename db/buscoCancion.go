@@ -17,17 +17,14 @@ func BuscoCancion(param string) (models.Song, error) {
 	var resultado models.Song
 	err := col.FindOne(
 		ctx,
-		bson.M{"$or": []bson.M{{"trackCensoredName": utils.Like(param)},
-			{"artistName": utils.Like(param)},
-			{"collectionName": utils.Like(param)}}}).Decode(&resultado)
-
+		bson.M{"$or": []bson.M{{"trackName": utils.LikeMongo(param)},
+			{"artistName": utils.LikeMongo(param)},
+			{"collectionName": utils.LikeMongo(param)}}}).Decode(&resultado)
 	if err != nil {
 		fmt.Println("entra a buscar en itunes")
 		GetItunes(param)
 		return resultado, err
-
 	}
-
 	return resultado, nil
 
 }

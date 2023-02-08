@@ -11,8 +11,10 @@ import (
 
 func GetItunes(query string) []byte {
 	url := "https://itunes.apple.com/search?term=" + query
+	fmt.Println("url:", url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		fmt.Println("ERROR EN EL REQUEST")
 		log.Fatal(err)
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -24,14 +26,12 @@ func GetItunes(query string) []byte {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	var resultado models.Song
-	fmt.Println("resultado", resultado)
 	json.Unmarshal(body, &resultado)
 	for _, v := range resultado.Results.([]interface{}) {
 		InsertoRegistro(v)
-		return body
-		BuscoCancion(query)
 	}
 	if err != nil {
+		fmt.Println("ERROR EN EL UNMARSHAL")
 		log.Fatal(err)
 
 	}

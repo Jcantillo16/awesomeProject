@@ -7,7 +7,7 @@ import (
 type Song struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Results  interface{}        `bson:"results" json:"results"`
-	Name     string             `bson:"collectionCensoredName" json:"trackCensoredName"`
+	Name     string             `bson:"trackName" json:"trackName"`
 	Artist   string             `bson:"artistName" json:"artistName"`
 	Price    float64            `bson:"trackPrice" json:"trackPrice"`
 	Duration int64              `bson:"trackTimeMillis" json:"trackTimeMillis"`
