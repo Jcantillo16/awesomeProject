@@ -14,7 +14,7 @@ import (
 func Manejadores() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/registro", middlewares.ChequeoBD(routers.Registro)).Methods("POST")
+	//router.HandleFunc("/registro", middlewares.ChequeoBD(routers.Registro)).Methods("POST")
 
 	//ruta para buscar una cancion
 	router.HandleFunc("/getSong/", middlewares.ChequeoBD(routers.GetFilterBy)).Methods("GET")

@@ -32,7 +32,7 @@ func GetFilterArtist(w http.ResponseWriter, r *http.Request) {
 	}
 	cancion, err := db.BuscoCancion(artist)
 	if err != nil {
-		http.Error(w, "Ocurrió un error al intentar buscar la cancion "+err.Error(), 400)
+		http.Error(w, "Ocurrió un error "+err.Error(), 400)
 		return
 	}
 	w.WriteHeader(http.StatusCreated)

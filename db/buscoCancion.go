@@ -49,24 +49,16 @@ func GetItunes(query string) []byte {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	var resultado models.Song
+	fmt.Println("resultado", resultado)
 	json.Unmarshal(body, &resultado)
-	GetJson("https://itunes.apple.com/lookup?id=")
-	InsertoRegistro(resultado)
-	return body
-}
+	for _, v := range resultado.Results.([]interface{}) {
+		fmt.Println("v", v)
+		InsertoRegistro(v)
+		return body
+	}
+	if err != nil {
+		log.Fatal(err)
 
-func GetJson(url string) []byte {
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		log.Fatal(err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
 	return body
 }
