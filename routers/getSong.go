@@ -3,12 +3,14 @@ package routers
 import (
 	"awesomeProject/db"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 func GetFilterName(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 	name := r.URL.Query().Get("name")
+	fmt.Println("name", name)
 	if len(name) < 1 {
 		http.Error(w, "Debe enviar el parametro name", http.StatusBadRequest)
 		return
@@ -24,7 +26,8 @@ func GetFilterName(w http.ResponseWriter, r *http.Request) {
 
 func GetFilterArtist(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
-	artist := r.URL.Query().Get("artist")
+	artist := r.URL.Query().Get("artistName")
+	fmt.Println("artist", artist)
 
 	if len(artist) < 1 {
 		http.Error(w, "Debe enviar el parametro artist", http.StatusBadRequest)
@@ -74,7 +77,7 @@ func GetFilterBy(w http.ResponseWriter, r *http.Request) {
 			GetFilterName(w, r)
 			return
 		}
-		if params.Get("artist") != "" {
+		if params.Get("artistName") != "" {
 			GetFilterArtist(w, r)
 			return
 		}

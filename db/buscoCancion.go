@@ -20,9 +20,9 @@ func BuscoCancion(param string) (models.Song, error) {
 	var resultado models.Song
 	err := col.FindOne(
 		ctx,
-		bson.M{"$or": []bson.M{{"name": param},
-			{"artist": param},
-			{"album": param}}}).Decode(&resultado)
+		bson.M{"$or": []bson.M{{"trackCensoredName": param},
+			{"artistName": param},
+			{"collectionName": param}}}).Decode(&resultado)
 
 	if err != nil {
 		fmt.Println("entra a buscar en itunes")
@@ -30,6 +30,7 @@ func BuscoCancion(param string) (models.Song, error) {
 		return resultado, err
 
 	}
+
 	return resultado, nil
 
 }
@@ -52,9 +53,9 @@ func GetItunes(query string) []byte {
 	fmt.Println("resultado", resultado)
 	json.Unmarshal(body, &resultado)
 	for _, v := range resultado.Results.([]interface{}) {
-		fmt.Println("v", v)
 		InsertoRegistro(v)
 		return body
+		BuscoCancion(query)
 	}
 	if err != nil {
 		log.Fatal(err)
