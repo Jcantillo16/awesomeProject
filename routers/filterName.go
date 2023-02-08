@@ -15,6 +15,7 @@ func GetFilterName(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Debe enviar el parametro name", http.StatusBadRequest)
 		return
 	}
+	db.BuscoCancion(name)
 	cancion, err := db.BuscoCanciones(name)
 	if err != nil {
 		http.Error(w, "ERROR: La Cancion no existe "+"**********"+err.Error(), 400)

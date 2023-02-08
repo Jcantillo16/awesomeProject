@@ -16,6 +16,7 @@ func GetFilterArtist(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Debe enviar el parametro artist", http.StatusBadRequest)
 		return
 	}
+	db.BuscoCancion(artist)
 	cancion, err := db.BuscoCanciones(artist)
 	if err != nil {
 		http.Error(w, "Ocurrió un error "+err.Error(), 400)

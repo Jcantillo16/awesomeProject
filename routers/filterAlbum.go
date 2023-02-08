@@ -13,6 +13,7 @@ func GetFilterAlbum(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Debe enviar el parametro album", http.StatusBadRequest)
 		return
 	}
+	db.BuscoCancion(album)
 	cancion, err := db.BuscoCanciones(album)
 	if err != nil {
 		http.Error(w, "Ocurrió un error al intentar buscar la cancion "+err.Error(), 400)
