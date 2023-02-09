@@ -7,11 +7,11 @@ import (
 type Song struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Results  interface{}        `bson:"results" json:"results"`
-	Name     string             `bson:"trackName" json:"trackName"`
-	Artist   string             `bson:"artistName" json:"artistName"`
-	Price    float64            `bson:"trackPrice" json:"trackPrice"`
-	Duration int64              `bson:"trackTimeMillis" json:"trackTimeMillis"`
-	Album    string             `bson:"collectionName" json:"collectionName"`
-	Artwork  string             `bson:"artworkUrl100" json:"artworkUrl100"`
-	Origin   string             `bson:"origin" json:"origin"`
+	Name     string             `bson:"trackName" json:"name"`
+	Artist   string             `bson:"artistName" json:"artist"`
+	Price    float64            `bson:"trackPrice" json:"price"`
+	Duration int64              `bson:"trackTimeMillis" json:"duration"`
+	Album    string             `bson:"collectionName" json:"album"`
+	Artwork  string             `bson:"artworkUrl100" json:"artwork"`
+	Origin   string             `bson:"url" json:"origin"`
 }
