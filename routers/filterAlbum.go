@@ -14,7 +14,7 @@ func GetFilterAlbum(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	db.BuscoCancion(album)
-	cancion, err := db.BuscoCanciones(album)
+	cancion, err := db.BuscoCancionesByAlbum(album)
 	if err != nil {
 		http.Error(w, "Ocurrió un error al intentar buscar la cancion "+err.Error(), 400)
 		return

@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func GetFilterName(w http.ResponseWriter, r *http.Request) {
+func GetFilterAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 	name := r.URL.Query().Get("name")
 	fmt.Println("name", name)
@@ -16,7 +16,7 @@ func GetFilterName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//db.BuscoCancion(name)
-	cancion, err := db.BuscoCancionesByName(name)
+	cancion, err := db.BuscoCancion(name)
 	if err != nil {
 		http.Error(w, "ERROR: La Cancion no existe "+"**********"+err.Error(), 400)
 		return

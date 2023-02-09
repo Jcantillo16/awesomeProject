@@ -5,32 +5,33 @@ import (
 )
 
 func GetFilterBy(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 
 	params := r.URL.Query()
-	if len(params) < 1 {
-		http.Error(w, "Debe enviar el parametro name y artist o album", http.StatusBadRequest)
+	name := params.Get("name")
+	artist := params.Get("artist")
+	album := params.Get("album")
+
+	if name != "" && artist != "" && album != "" {
+		w.Write([]byte("Se filtra por nombre de la cancion: " + name + " nombre del artista: " +
+			artist + " y nombre del album: " + album + "..."))
+		GetFilterAll(w, r)
+
+	} else if name != "" {
+		w.Write([]byte("Se filtra por nombre de la cancion: " + name + "... "))
+		GetFilterName(w, r)
+
+	} else if artist != "" {
+		w.Write([]byte("Se filtra por nombre del artista: " + artist + "... "))
+		GetFilterArtist(w, r)
+
+	} else if album != "" {
+		w.Write([]byte("Se filtra por nombre del album: " + album + "... "))
+		GetFilterAlbum(w, r)
+
+	} else {
+		http.Error(w, "Debe enviar al menos un parametro de busqueda", http.StatusBadRequest)
 		return
-	}
 
-	if len(params) > 1 {
-		http.Error(w, "Debe enviar solo un parametro", http.StatusBadRequest)
-		return
 	}
-
-	if len(params) == 1 {
-		if params.Get("name") != "" {
-			GetFilterName(w, r)
-			return
-		}
-		if params.Get("artist") != "" {
-			GetFilterArtist(w, r)
-			return
-		}
-		if params.Get("album") != "" {
-			GetFilterAlbum(w, r)
-			return
-		}
-	}
-
 }
