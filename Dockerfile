@@ -1,18 +1,33 @@
-FROM golang:1.19-alpine AS builder
+FROM golang:latest AS builder
 
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install -y git
 
-COPY . /app
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+
+WORKDIR /go/src/awesomeProject
+
+COPY go.mod .
 
 RUN go mod download
 
-COPY *go ./
-
-RUN go build -o main .
+COPY . .
 
 EXPOSE 8080
 
-CMD ["/app/main"]
+RUN go build main.go
+
+CMD ["go", "run", "main.go"]
+
+# Path: docker-compose.yml
+
+
+
+
 
 
 
